@@ -35,7 +35,7 @@ export function LearningSupport() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="bg-primary-50 py-20">
+    <section className="bg-[#F8F8F8] py-20">
       <Container>
         <SectionHeading badge="Student Success Matters" title="Learning Support for Every Stage" />
         <div className="mt-12 grid items-start gap-8 lg:grid-cols-2">
@@ -45,7 +45,7 @@ export function LearningSupport() {
               return (
                 <div
                   key={stage.title}
-                  className="rounded-2xl border border-neutral-200 bg-white p-6"
+                  className="rounded-2xl border border-neutral-200 bg-primary-100 p-6"
                 >
                   <button
                     type="button"

@@ -13,34 +13,123 @@ const regions = [
   { name: "America", flag: "🇺🇸" },
 ];
 
-const levels = [
-  "Elementary School",
-  "Middle School",
-  "High School",
-  "University Undergraduate",
-  "Postgraduate",
-  "Working Professionals",
-];
 
-const exams = [
-  "Provincial Exams",
-  "Ministerial Exams",
-  "EQAO",
-  "SSAT",
-  "ISEE",
-  "SAT",
-  "AP",
-  "IB",
-];
+const curriculumData = {
+  Nigeria: {
+    levels: [
+      "Primary School",
+      "Junior Secondary School",
+      "Senior Secondary School",
+      "University Undergraduate",
+      "Postgraduate",
+      "Working Professionals",
+    ],
+    exams: [
+      "WAEC",
+      "NECO",
+      "JAMB",
+      "BECE",
+      "Common Entrance",
+      "JUPEB",
+      "IJMB",
+      "Post UTME",
+    ],
+    subjects: [
+      "Mathematics",
+      "English Language",
+      "Physics",
+      "Chemistry",
+      "Biology",
+      "Economics",
+    ],
+  },
 
-const subjects = [
-  "Mathematics",
-  "English",
-  "Sciences",
-  "Computer Science & Coding",
-  "History",
-  "Foreign Languages",
-];
+  "United Kingdom": {
+    levels: [
+      "Primary School",
+      "Key Stage 3",
+      "GCSE",
+      "A-Level",
+      "University Undergraduate",
+      "Working Professionals",
+    ],
+    exams: [
+      "GCSE",
+      "A-Level",
+      "11+",
+      "SATs",
+      "UCAT",
+      "BMAT",
+      "Entrance Exams",
+    ],
+    subjects: [
+      "Mathematics",
+      "English Literature",
+      "English Language",
+      "Physics",
+      "Chemistry",
+      "Biology",
+    ],
+  },
+
+  Canada: {
+    levels: [
+      "Elementary School",
+      "Middle School",
+      "High School",
+      "University Undergraduate",
+      "Postgraduate",
+      "Working Professionals",
+    ],
+    exams: [
+      "EQAO",
+      "OSSLT",
+      "SAT",
+      "AP",
+      "IB",
+      "Provincial Exams",
+    ],
+    subjects: [
+      "Mathematics",
+      "English",
+      "Sciences",
+      "Computer Science",
+      "French",
+      "History",
+    ],
+  },
+
+  America: {
+    levels: [
+      "Elementary School",
+      "Middle School",
+      "High School",
+      "College Undergraduate",
+      "Graduate School",
+      "Professionals",
+    ],
+    exams: [
+      "SAT",
+      "ACT",
+      "AP",
+      "PSAT",
+      "SSAT",
+      "ISEE",
+      "GRE",
+      "GMAT",
+    ],
+    subjects: [
+      "Mathematics",
+      "English",
+      "Science",
+      "Computer Science",
+      "History",
+      "Spanish",
+    ],
+  },
+} as const;
+
+
 
 function List({ items, inverse }: { items: string[]; inverse?: boolean }) {
   return (
@@ -60,46 +149,67 @@ function List({ items, inverse }: { items: string[]; inverse?: boolean }) {
 }
 
 export function Curriculum() {
-  const [active, setActive] = useState(0);
+ const [active, setActive] = useState("Nigeria");
 
+  const current =
+    curriculumData[active as keyof typeof curriculumData];
   return (
-    <section id="curriculum" className="py-20">
+    <section id="curriculum" className="py-16 lg:py-20">
       <Container>
-        <SectionHeading badge="Explore Programs" title="Choose Your Curriculum" />
+        <SectionHeading
+          badge="Explore Programs"
+          title="Choose Your Curriculum"
+        />
 
+        {/* Tabs */}
         <div className="mt-8 flex justify-center">
-          <div className="flex flex-wrap items-center gap-1 rounded-full border border-neutral-200 bg-neutral-100 p-1.5">
-            {regions.map((r, i) => (
+          <div className="flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-neutral-200 bg-neutral-100 p-2">
+            {regions.map((region) => (
               <button
-                key={r.name}
+                key={region.name}
                 type="button"
-                onClick={() => setActive(i)}
+                onClick={() => setActive(region.name)}
                 className={cn(
-                  "flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                  active === i
+                  "flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all",
+                  active === region.name
                     ? "bg-white text-ink shadow-sm"
-                    : "text-ink-secondary hover:text-ink",
+                    : "text-ink-secondary hover:text-ink"
                 )}
               >
-                <span>{r.flag}</span>
-                {r.name}
+                <span>{region.flag}</span>
+                {region.name}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          <div className="rounded-3xl border border-neutral-200 bg-primary-50 p-7">
-            <h3 className="mb-6 text-2xl font-semibold text-ink">Levels We Cover</h3>
-            <List items={levels} />
+        {/* Cards */}
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          {/* Levels */}
+          <div className="rounded-3xl border border-neutral-200 bg-primary-50 p-6 lg:p-7">
+            <h3 className="mb-6 text-xl lg:text-2xl font-semibold text-ink">
+              Levels We Cover
+            </h3>
+
+            <List items={[...current.levels]} />
           </div>
-          <div className="rounded-3xl bg-brand p-7 lg:-mt-4 lg:mb-[-1rem]">
-            <h3 className="mb-6 text-2xl font-semibold text-white">Exams We Coach</h3>
-            <List items={exams} inverse />
+
+          {/* Exams */}
+          <div className="rounded-3xl bg-brand p-6 lg:p-7 lg:-mt-4 lg:mb-[-1rem]">
+            <h3 className="mb-6 text-xl lg:text-2xl font-semibold text-white">
+              Exams We Coach
+            </h3>
+
+            <List items={[...current.exams]} inverse />
           </div>
-          <div className="rounded-3xl border border-neutral-200 bg-primary-50 p-7">
-            <h3 className="mb-6 text-2xl font-semibold text-ink">Subjects We Teach</h3>
-            <List items={subjects} />
+
+          {/* Subjects */}
+          <div className="rounded-3xl border border-neutral-200 bg-primary-50 p-6 lg:p-7">
+            <h3 className="mb-6 text-xl lg:text-2xl font-semibold text-ink">
+              Subjects We Teach
+            </h3>
+
+            <List items={[...current.subjects]} />
           </div>
         </div>
       </Container>

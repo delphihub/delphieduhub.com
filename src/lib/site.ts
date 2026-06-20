@@ -29,7 +29,14 @@ export const navLinks = [
 ];
 
 export const contact = {
-  email: "support@yourplatform.com",
-  phone: "+234 XXX XXX XXXX",
-  whatsapp: "https://wa.me/2340000000000",
+  email: "admin@delphieduhub.com",
+  phone: "+234 916 754 2539",
+  whatsapp: "https://wa.me/2349167542539",
+};
+
+export const socials = {
+  instagram: "https://instagram.com/delphieduhub",
+  x: "https://x.com/delphieduhub",
+  facebook: "https://facebook.com/delphieduhub",
+  linkedin: "https://linkedin.com/company/delphieduhub",
 };
